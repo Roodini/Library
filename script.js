@@ -13,6 +13,7 @@ function Book() {
   this.title = "";
   this.author = "";
   this.pages = "";
+  this.read = "";
 
   this.createBook = function () {
     form.addEventListener("submit", (event) => {
@@ -21,6 +22,7 @@ function Book() {
       newBook.title = bookTitle.value;
       newBook.author = bookAuthor.value;
       newBook.pages = bookPages.value;
+      newBook.read = "NO";
       if (!newBook.title || !newBook.author || !newBook.pages) {
         alert("Incomplete form");
         event.preventDefault();
@@ -67,6 +69,30 @@ function renderBooks() {
     newDiv.appendChild(pagesP);
 
     container.appendChild(newDiv);
+
+    const readStatus = document.createElement("input");
+    readStatus.setAttribute("type", "checkbox");
+    readStatus.id = `readStatus${index}`;
+    readStatus.checked = book.read === "YES";
+
+    const label = document.createElement("label");
+    label.textContent = `Read: ${book.read}`;
+    label.htmlFor = `readStatus`;
+
+    readStatus.addEventListener("change", () => {
+      book.read = readStatus.checked ? "YES" : "NO";
+      label.textContent = `Read: ${book.read}`;
+    });
+    newDiv.appendChild(readStatus);
+    newDiv.appendChild(label);
+    const deleteCard = document.createElement("button");
+    deleteCard.textContent = "Delete Book Card";
+    newDiv.appendChild(deleteCard);
+
+    deleteCard.addEventListener("click", () => {
+      myLibrary.splice(index, 1);
+      renderBooks();
+    });
   });
 }
 function addBookToLibrary() {
