@@ -1,0 +1,7 @@
+.container {
+  display: flex;
+}
+
+.book-card {
+  margin: 40px;
+}
