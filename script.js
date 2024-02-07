@@ -9,32 +9,48 @@ const exitBtn = document.getElementById("exit-btn");
 
 let myLibrary = [];
 
-function Book() {
-  this.title = "";
-  this.author = "";
-  this.pages = "";
-  this.read = "";
+function Book(title, author, pages, read) {
+  this.title = title;
+  this.author = author;
+  this.pages = pages;
+  this.read = read;
+}
 
-  this.createBook = function () {
-    form.addEventListener("submit", (event) => {
-      let newBook = new Book();
+function createBook() {
+  const book1 = new Book(
+    "The Subtle Art of Not Giving a Fuck",
+    "Mark Manson",
+    206,
+    "NO"
+  );
+  const book2 = new Book("The Confidence Gap", 
+  "Russel Harris", 
+  250, 
+  "YES"
+  );
 
-      newBook.title = bookTitle.value;
-      newBook.author = bookAuthor.value;
-      newBook.pages = bookPages.value;
-      newBook.read = "NO";
-      if (!newBook.title || !newBook.author || !newBook.pages) {
-        alert("Incomplete form");
-        event.preventDefault();
-      } else {
-        myLibrary.push(newBook);
-        dialog.close();
-        form.reset();
-        renderBooks();
-        event.preventDefault();
-      }
-    });
-  };
+  addBookToLibrary(book1);
+  addBookToLibrary(book2);
+  renderBooks();
+
+  form.addEventListener("submit", (event) => {
+    let title = bookTitle.value;
+    let author = bookAuthor.value;
+    let pages = bookPages.value;
+    let read = "NO";
+    let newBook = new Book(title, author, pages, read);
+
+    if (!newBook.title || !newBook.author || !newBook.pages) {
+      alert("Incomplete form");
+      event.preventDefault();
+    } else {
+      addBookToLibrary(newBook);
+      dialog.close();
+      form.reset();
+      renderBooks();
+      event.preventDefault();
+    }
+  });
 }
 
 exitBtn.addEventListener("click", (event) => {
@@ -95,8 +111,9 @@ function renderBooks() {
     });
   });
 }
-function addBookToLibrary() {
-  let book = new Book();
-  book.createBook();
+
+function addBookToLibrary(book) {
+  myLibrary.push(book);
 }
-addBookToLibrary();
+
+createBook();
