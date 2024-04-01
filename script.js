@@ -1,11 +1,17 @@
 const container = document.querySelector(".container");
 const showBtn = document.getElementById("show-dialog");
 const dialog = document.getElementById("dialog");
+const dialog2 = document.getElementById("dialog2")
 const form = document.getElementById("form");
+const editForm = document.getElementById("form2");
 const bookTitle = document.getElementById("title");
 const bookAuthor = document.getElementById("author");
 const bookPages = document.getElementById("pages");
+const editTitle = document.getElementById("edit-title");
+const editAuthor = document.getElementById("edit-author");
+const editPages = document.getElementById("edit-pages");
 const exitBtn = document.getElementById("exit-btn");
+const exitBtn2 = document.getElementById("exit-btn2");
 
 let myLibrary = [];
 
@@ -101,16 +107,48 @@ function renderBooks() {
     });
     newDiv.appendChild(readStatus);
     newDiv.appendChild(label);
+   
+   
     const deleteCard = document.createElement("button");
+    deleteCard.classList.add("delete-button");
     deleteCard.textContent = "Delete Book Card";
     newDiv.appendChild(deleteCard);
+    
 
     deleteCard.addEventListener("click", () => {
       myLibrary.splice(index, 1);
       renderBooks();
     });
+
+    const editCard = document.createElement("button");
+    editCard.textContent = "Edit Book Card";
+    newDiv.appendChild(editCard);
+
+
+    editCard.addEventListener("click", () => {
+      dialog2.showModal();
+      editTitle.value = book.title;
+      editAuthor.value = book.author;
+      editPages.value = book.pages;
+      
+      exitBtn2.addEventListener("click", (event) => {
+        dialog2.close();
+        event.preventDefault();
+      });
+      
+      editForm.addEventListener("submit", (event) => {
+      book.title = editTitle.value;
+      book.author = editAuthor.value;
+      book.pages = editPages.value;
+      event.preventDefault();
+      dialog2.close();
+      renderBooks();
   });
-}
+})
+     
+    })
+};
+
 
 function addBookToLibrary(book) {
   myLibrary.push(book);

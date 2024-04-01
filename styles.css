@@ -1,7 +1,18 @@
+
+
+
 .container {
   display: flex;
 }
 
 .book-card {
   margin: 40px;
+  border: 1px black solid;
+  padding: 30px;
+}
+
+.delete-button{
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
